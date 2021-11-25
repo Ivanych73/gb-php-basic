@@ -1,74 +1,33 @@
-<?php
-    //echo "Hello, World!";
-
-    //$name = "GeekBrains user";
-    //echo "Hello, $name!";
-
-    //define('MY_CONST', 100);
-    //echo MY_CONST;
-    /*
-    $int10 = 42;
-    $int2 = 0b101010;
-    $int8 = 052;
-    $int16 = 0x2A;
-    echo "Десятеричная система $int10 <br>";
-    echo "Двоичная система $int2 <br>";
-    echo "Восьмеричная система $int8 <br>";
-    echo "Шестнадцатеричная система $int16 <br>";
-    */
-    /*
-    $precise1 = 1.5;
-    $precise2 = 1.5e4;
-    $precise3 = 6E-8;
-    echo "$precise1 | $precise2 | $precise3";
-    */
-    /*
-    $a = 1;
-    echo "$a";
-    echo '$a';
-    */
-    /*
-    $a = 10;
-    $b = (boolean)$a;
-    echo $b;
-    */
-    /*
-    $a = 'Hello,';
-    $b = 'world';
-    $c = $a . $b;
-    echo $c;
-    */
-    /*
-    $a = 4;
-    $b = 5;
-    echo $a + $b . '<br>';
-    echo $a * $b . '<br>';
-    echo $a - $b .'<br>';
-    echo $a / $b . '<br>';
-    echo $a % $b . '<br>';
-    echo $a ** $b . '<br>';
-    */
-    /*
-    $a = 4;
-    $b = 5;
-    $a += $b;
-    echo 'a = ' . $a. '<br>';
-    $a = 0;
-    echo $a++. '<br>';
-    echo ++$a. '<br>';
-    echo $a--. '<br>';
-    echo --$a;
-    */
-
-    $a = 4;
-    $b = 5;
-    var_dump($a == $b);
-    var_dump($a === $b);
-    var_dump($a > $b);
-    var_dump($a < $b);
-    var_dump($a <> $b);
-    var_dump($a != $b);
-    var_dump($a !== $b);
-    var_dump($a <= $b);
-    var_dump($a >= $b);
-?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GB php-basic lesson4 task2</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <h1>Фотогалерея</h1>
+    <?php
+        $pathSmall = "\img\small\\";
+        $pathBig = "\img\big\\";
+        $images = scandir("img\small");
+        array_shift($images);
+        array_shift($images);
+        $imgTag = "<img class = gallery-img src = $pathSmall";
+        foreach ($images as $key => $value) {
+            $hrefTag = "<a href = \"fullImage.php?img=$pathBig$value\">";
+            $gallery .= $hrefTag.$imgTag.$value." alt = \"\"></a>";
+            if (($key+1) % 3 === 0)
+                $gallery .= "<br>";
+        }
+        echo $gallery;
+    ?>
+    <form action="server2.php" method="post" enctype="multipart/form-data">
+        <p>Загрузить файл в галерею</p>
+        <input type="file" accept = "image/*" name="photo"><br><br>
+        <input type="submit" value="Загрузить">
+    </form>
+</body>
+</html>
