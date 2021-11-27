@@ -1,6 +1,6 @@
 <?php 
-	$title = "GB php-basic leson1 task4";
-	$header1 = "Header for GB php-basic leson1 task4";
+	$title = "GB php-basic leson3 task6";
+	$header1 = "Header for GB php-basic leson3 task6";
 	$currentYear = date('Y');
 ?>
 
@@ -11,23 +11,36 @@
 	<meta name="author" content="Luka Cvrk (www.solucija.com)" />
 	<link rel="stylesheet" href="css/main.css" type="text/css" />
 	<title>
-		<?php echo $title;
-		?>
+		<?= $title;	?>
 	</title>
 </head>
 <body>
 	<div id="content">
 		<h1>
-			<?php 
-				echo $header1;
-			?>
+			<?= $header1;?>
 		</h1>
-		
-		<ul id="menu">
-			<li><a href="#">home</a></li>
-			<li><a href="#">archive</a></li>
-			<li><a href="#">contact</a></li>
-		</ul>
+
+		<?php
+
+//6. В имеющемся шаблоне сайта заменить статичное меню (ul – li) на генерируемое через PHP. Необходимо представить пункты меню как элементы массива и вывести их циклом. Подумать, как можно реализовать меню с вложенными подменю? Попробовать его реализовать.
+
+			function getUlFromArray($array) {
+				foreach($array as $key => $value) {
+					if (is_array($value)) $str .= "<li>".$key."<ul>".getUlFromArray($value)."</ul></li>";
+					else $str .= "<li>".$value."</li>";
+				}
+				return $str;
+			}
+
+			$menu = ["<a href=\"#\">home</a>", 
+				"<a href=\"#\">archive</a>", 
+				"<a href=\"#\">contact</a>"
+			];
+
+			$list = "<ul id=\"menu\">";
+			$list .= getUlFromArray($menu)."</ul>";
+			echo $list;
+		?>
 	
 		<div class="post">
 			<div class="details">
@@ -59,9 +72,7 @@
 		
 		<div id="footer">
 		      <p>Copyright &copy; <em>minimalistica</em> &middot;
-			  <?php
-				echo $currentYear;
-			  ?>
+			  <?= $currentYear;?>
 			  Design: Luka Cvrk, <a href="http://www.solucija.com/" title="Free CSS Templates">Solucija</a></p>
 		</div>	
 	</div>

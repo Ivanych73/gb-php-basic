@@ -1,166 +1,204 @@
 <?php
 
-  function sum($a, $b) {
-        return $a+$b;
-    }
-
-    function sub($a, $b) {
-        return $a-$b;
-    }
-
-    function mul($a, $b) {
-        return $a*$b;
-    }
-
-    function div($a, $b) {
-        return $a/$b;
-    }
-
-    function mathOperation($arg1, $arg2, $operation) {
-        switch ($operation) {
-            case '+':
-                return sum($arg1, $arg2);
-                break;
-            case '-':
-                return sub($arg1, $arg2);
-                break;
-            case '*':
-                return mul($arg1, $arg2);
-                break;
-            case '/':
-                return div($arg1, $arg2);
-                break;
-            default:
-                return "Передан неизвестный символ арифметической операции $operation";
+    function translit($str) {
+        $charsArray = [
+            "а" => "a",
+            "б" => "b",
+            "в" => "v",
+            "г" => "g",
+            "д" => "d",
+            "е" => "e",
+            "ё" => "e",
+            "ж" => "zh",
+            "з" => "z",
+            "и" => "i",
+            "й" => "y",
+            "к" => "k",
+            "л" => "l",
+            "м" => "m",
+            "н" => "n",
+            "о" => "o",
+            "п" => "p",
+            "р" => "r",
+            "с" => "s",
+            "т" => "t",
+            "у" => "u",
+            "ф" => "f",
+            "х" => "kh",
+            "ц" => "ts",
+            "ч" => "ch",
+            "ш" => "sh",
+            "щ" => "shch",
+            "ъ" => "",
+            "ы" => "y",
+            "ь" => "",
+            "э" => "e",
+            "ю" => "yu",
+            "я" => "ya",
+            "А" => "A",
+            "Б" => "B",
+            "В" => "V",
+            "Г" => "G",
+            "Д" => "D",
+            "Е" => "E",
+            "Ё" => "E",
+            "Ж" => "Zh",
+            "З" => "Z",
+            "И" => "I",
+            "Й" => "Y",
+            "К" => "K",
+            "Л" => "L",
+            "М" => "M",
+            "Н" => "N",
+            "О" => "O",
+            "П" => "P",
+            "Р" => "R",
+            "С" => "S",
+            "Т" => "T",
+            "У" => "U",
+            "Ф" => "F",
+            "Х" => "Kh",
+            "Ц" => "Ts",
+            "Ч" => "Ch",
+            "Ш" => "Sh",
+            "Щ" => "Shch",
+            "Ы" => "Y",
+            "Э" => "E",
+            "Ю" => "Yu",
+            "Я" => "Ya"
+        ];
+        foreach ($charsArray as $key => $value) {
+            $str = str_replace($key, $value, $str);
         }
+        return $str;
     }
 
-    function power($val, $pow) {
-        if ((int)$pow <= 1 || !is_numeric($val)) {
-            return "Error";
-        }
-        if ($pow === 2) $res = $val * $val;
-        else $res = $val * power($val, $pow - 1);
+    function replaceSpaces1($str) {
+        $wordsArray = explode(" ", $str);
+        return implode("_", $wordsArray);
+    }
+
+    function replaceSpaces2($str) {
+        return str_replace(" ", "_", $str);
+    }
+
+    function getStringInLatinWithoutSpaces($str) {
+        $formattedStr = translit($str);
+        return replaceSpaces1($formattedStr);
+    }
     
-        return $res;
-    }
-
-    function getStringValue($number, $strArr) {
-//Здесь нет контроля входных значений, так как подразумевается, что функция не работает с пользовательским вводом
-//а получает входные параметры из проверенной функции
-        if ($number >= 11 && $number <= 19) {
-            return $strArr[2];
-        } elseif ($number % 10 == 1) {
-            return $strArr[0];
-        } elseif ($number % 10 >= 2 && $number % 10 <= 4) {
-            return $strArr[1];
-        } else {
-            return $strArr[2];
-        }
-    }
-
-    function returnTimeInString() {
-        $hours = date('H');
-        $minutes = date('i');
-        $resStr = $hours.' '.getStringValue($hours, ['час', 'часа', 'часов']).' ';
-        $resStr .= $minutes.' '.getStringValue($minutes, ['минута', 'минуты', 'минут']);
-        return $resStr;
-    }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GB php-basic lesson2</title>
+    <title>GB php-basic lesson3</title>
 </head>
 <body>
-    <h1>Урок 2. Условные блоки, ветвление функции</h1>
-    <h2>Задание1. Объявить две целочисленные переменные $a и $b и задать им произвольные начальные значения. Затем написать скрипт, который работает по следующему принципу:</h2>
-    <ul>
-        <li>если $a и $b положительные, вывести их разность;</li>
-        <li>если $а и $b отрицательные, вывести их произведение;</li>
-        <li>если $а и $b разных знаков, вывести их сумму;</li>
-    </ul>
-    <p>Ноль можно считать положительным числом.</p>
+    <h2>1. С помощью цикла while вывести все числа в промежутке от 0 до 100, которые делятся на 3 без остатка.</h2>
+    <?php
+        $i = 0;
+        while ($i <= 100) {
+            if ($i % 3 == 0) 
+                echo $i."<br>";
+            $i++;
+        }
+    ?>
+    <h2>2. С помощью цикла do…while написать функцию для вывода чисел от 0 до 10, чтобы результат выглядел так:</h2>
+    <p>0 – ноль.</p>
+    <p>1 – нечетное число.</p>
+    <p>2 – четное число.</p>
+    <p>…</p>
+    <p>10 – четное число.</p>
 
     <?php
-        $a = rand(-50, 50);
-        $b = rand(-30, 30);
+        $i = 0;
+        do {
+            if ($i == 0) {
+                echo "$i - ноль.<br>";
+            }
+            elseif ($i % 2 == 0) {
+                echo "$i - четное число.<br>";
+            }
+            else {
+                echo "$i - нечетное число.<br>";
+            }
+            $i++;
+        } while ($i <= 10);
     ?>
-    <p>Сгенерили 2 числа: <?= $a ?> и <?= $b ?></p>
+
+    <h2>3. Объявить массив, в котором в качестве ключей будут использоваться названия областей, а в качестве значений – массивы с названиями городов из соответствующей области. Вывести в цикле значения массива</h2>
+
     <?php
-        if ($a >= 0 && $b >= 0) {
-            $res = mathOperation($a, $b, '-');
-            echo "Оба числа положительные, выводим их разность. Результат: $res";
-        } elseif ($a < 0 && $b < 0) {
-            $res = mathOperation($a, $b, '*');
-            echo "Оба числа отрицательные, выводим их произведение. Результат: $res";
-        } else {
-            $res = mathOperation($a, $b, '+');
-            echo "Числа разных знаков, выводим их сумму. Результат: $res";
+        $regions = [
+            "Калиниградская" => [
+                "Балтийск",
+                "Черняховск",
+                "Краснолесье"
+            ],
+            "Свердловская" => [
+                "Каменск-Уральский",
+                "Верхотурье",
+                "Невьянск"
+            ],
+            "Иркутская" => [
+                "Братск",
+                "Саянск",
+                "Киренск"
+            ]
+        ];
+        foreach($regions as $key => $value) {
+            echo "$key область: <br>";
+            echo implode(", ", $value)."<br>";
         }
     ?>
-    <h2>Задание 2. Присвоить переменной $а значение в промежутке [0..15]. С помощью оператора switch организовать вывод чисел от $a до 15.</h2>
+
+    <h2>4. Объявить массив, индексами которого являются буквы русского языка, а значениями – соответствующие латинские буквосочетания (‘а’=> ’a’, ‘б’ => ‘b’, ‘в’ => ‘v’, ‘г’ => ‘g’, …, ‘э’ => ‘e’, ‘ю’ => ‘yu’, ‘я’ => ‘ya’).
+    Написать функцию транслитерации строк.</h2>
+
     <?php
-        $a = rand(0, 15);
-        switch ($a) {
-            case 0:
-                echo '0<br>';
-            case 1:
-                echo '1<br>';
-            case 2:
-                echo '2<br>';
-            case 3:
-                echo '3<br>';
-            case 4:
-                echo '4<br>';
-            case 5:
-                echo '5<br>';
-            case 6:
-                echo '6<br>';
-            case 7:
-                echo '7<br>';
-            case 8:
-                echo '8<br>';
-            case 9:
-                echo '9<br>';
-            case 10:
-                echo '10<br>';
-            case 11:
-                echo '11<br>';
-            case 12:
-                echo '12<br>';
-            case 13:
-                echo '13<br>';
-            case 14:
-                echo '14<br>';
-            case 15:
-                echo '15<br>';
-                break;
-            default:
-                echo "Указанное число не входит в диапазон от 0 до 15";
-                break;
+
+        if (isset($_GET["text_cyr"])) 
+            $strToFormat = $_GET["text_cyr"];
+        else $strToFormat = "Съешь ещё этих мягких французских булок, да выпей чаю.";
+        echo translit($strToFormat);
+    ?>
+
+    <h2>5. Написать функцию, которая заменяет в строке пробелы на подчеркивания и возвращает видоизмененную строчку.</h2>
+
+    <?= replaceSpaces1($strToFormat)."<br>";
+        replaceSpaces2($strToFormat);
+    ?>
+
+    <h2>7. *Вывести с помощью цикла for числа от 0 до 9, не используя тело цикла. Выглядеть должно так:</h2>
+    <p>for (…){ // здесь пусто}</p>
+
+    <?php
+        for ($i = 0; $i <= 9; print $i++."<br>") {};
+    ?>
+
+    <h2>8. *Повторить третье задание, но вывести на экран только города, начинающиеся с буквы «К».</h2>
+
+    <?php
+        foreach($regions as $region => $cities) {
+            echo "$region область: <br>";
+            $citiesWithK = [];
+            foreach($cities as $city) {
+                if (strpos($city, "К") === 0 ) {
+                    $citiesWithK[] = $city;
+                }
+            }
+            echo implode(", ", $citiesWithK)."<br>";
         }
     ?>
-    <h2>Задание 3. Реализовать основные 4 арифметические операции в виде функций с двумя параметрами. Обязательно использовать оператор return.</h2>
-    <p>Сделал в решении к 1 заданию</p>
-    <h2>Задание 4. Реализовать функцию с тремя параметрами: function mathOperation($arg1, $arg2, $operation), где $arg1, $arg2 – значения аргументов, $operation – строка с названием операции. В зависимости от переданного значения операции выполнить одну из арифметических операций (использовать функции из пункта 3) и вернуть полученное значение (использовать switch).</h2>
-    <p>Сделал в решении к 1 заданию</p>
-    <h2>Задание 6. *С помощью рекурсии организовать функцию возведения числа в степень. Формат: function power($val, $pow), где $val – заданное число, $pow – степень.</h2>
+
+    <h2>9. *Объединить две ранее написанные функции в одну, которая получает строку на русском языке, производит транслитерацию и замену пробелов на подчеркивания (аналогичная задача решается при конструировании url-адресов на основе названия статьи в блогах).</h2>
+
     <?php
-        $power = $_GET['pow'];
-        $value = $_GET['val'];
-        $powRes = power($value, $power);
-        echo "$value в степени $power будет $powRes";
+        echo getStringInLatinWithoutSpaces($strToFormat);
     ?>
-    <h2>Задание 7. *Написать функцию, которая вычисляет текущее время и возвращает его в формате с правильными склонениями, например:</h2>
-    <ul>
-        <li>22 часа 15 минут</li>
-        <li>21 час 43 минуты</li>
-    </ul>
-    <?= returnTimeInString() ?>
 </body>
 </html>
-
