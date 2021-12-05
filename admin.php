@@ -9,10 +9,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">  
 </head>
 <body>
+    <?php require_once('back.php');?>
     <div class = "container"> 
         <?php
             require_once('config.php');
-            $sql = "select catalog.id as goodId, catalog.title as goodTitle, price, images.id as imageId, images.title as imageTitle, images.pathsmall, images.clicks FROM catalog LEFT JOIN images on images.good_id = catalog.id order by clicks desc";
+            $sql = "select catalog.id as goodId, catalog.title as goodTitle, price, images.id as imageId, images.title as imageTitle, images.pathsmall, images.clicks FROM catalog LEFT JOIN images on images.good_id = catalog.id order by catalog.id desc";
             $res = mysqli_query($connect, $sql);
             while ($data = mysqli_fetch_assoc($res)) {
                 $goods[] = $data;
@@ -21,11 +22,18 @@
         <section class="py-5 text-center container">
             <div class="row py-lg-5">
                 <div class="col-lg-6 col-md-8 mx-auto">
-                    <h1 class="fw-light">Добро пожаловать в наш магазин котиков</h1>
-                    <p class="lead text-muted">Здесь Вы можете полюбоваться на прекрасных котиков и даже выбрать себе какого-нибудь!</p>
+                    <h1 class="fw-light">Панель управления магазина котиков</h1>
+                    <p><a href="<?= ADD_UPDATE_GOOD_PAGE?>" class="btn btn-primary my-2">Добавить новый товар</a></p>
                 </div>
             </div>
         </section>
+        <?php 
+            if ($_GET['result']) :
+            $result = trim(strip_tags((string)$_GET['result']));
+        ?>
+        <p class="alert alert-warning"><?= $result?></p>
+
+        <?php endif;?>
         <div class="album py-5 bg-light">
             <div class="container">
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3\">
@@ -47,12 +55,12 @@
                                 '/{price}/'
                             ];
                             $replacement = [
-                                DETAIL_VIEW_PAGE."?id={$value['goodId']}", 
-                                "Подробнее об этом котике",
+                                ADD_UPDATE_GOOD_PAGE."?id={$value['goodId']}", 
+                                "Редактировать",
                                 $value['pathsmall'],
                                 $value['imageTitle'],
-                                '#',
-                                "Купить",
+                                "deletegood.php?id={$value['goodId']}",
+                                "Удалить",
                                 $value['goodTitle'],
                                 $value['price']                
                             ];
