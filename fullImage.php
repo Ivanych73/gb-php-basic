@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php require_once('head.php'); ?>
 <h1>Полноразмерное изображение</h1>
 <?php
@@ -25,3 +26,11 @@
     ?>
 </div>
 <?php require_once('close.php');?>
+=======
+<h1>Полноразмерное изображение</h1>
+<img src="<?= $_GET['img']?>" alt="">
+<br>
+<?php
+require_once("back.php");
+?>
+>>>>>>> master
