@@ -57,6 +57,7 @@
                                 $value['pathsmall'],
                                 $value['imageTitle'],
                                 ADD_TO_CART."?id={$value['goodId']}",
+
                                 "Купить",
                                 $value['goodTitle'],
                                 $value['price']                

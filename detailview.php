@@ -2,6 +2,7 @@
     require_once('head.php');
     require_once("config.php");
     require_once("{$_SERVER['DOCUMENT_ROOT']}/urls.php");
+
     if ($_GET['id']) {
         $id = (int)$_GET['id'];
         $sql = "select catalog.title as goodTitle, description, price, images.pathbig, images.clicks, images.title AS imageTitle, images.id as imageId FROM `catalog` LEFT JOIN images ON images.good_id = catalog.id WHERE catalog.id = $id";
@@ -37,6 +38,7 @@
             if(!$res) {
                 die("Ошибка получения информации об отзывах из базы данных!");
             }
+
             while ($data = mysqli_fetch_assoc($res)) {
                 $reviews[] = $data;
             }
@@ -62,6 +64,7 @@
     <?php
         if($good['clicks']) 
             echo "Всего просмотров {$good['clicks']}<br>";
+
     ?>
 </div>
 <script src = "js/bootstrap.min.js"></script>

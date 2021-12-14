@@ -37,6 +37,7 @@
 
 <div class = "container">
     <form action="<?= SAVE_GOOD ?>" method="post" enctype="multipart/form-data" onreset=clearFile() >
+
         <input type="hidden" name="id" value=<?= $id?>>
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Название товара</label>
@@ -48,9 +49,11 @@
         </div>
         <div class="mb-3">
             <label for="exampleFormControlInput2" class="form-label">Цена</label>
+
             <input type="number" class="form-control" name = "price" value = "<?= $price ?>" id="exampleFormControlInput2" placeholder="0">
         </div>
         <img src="<?= $imageSrc?>" data-src="<?= $imageSrc?>" id="output" alt="" height = 400>
+
         <div class="mb-3">
             <div id="fileHelp" class="form-text">Загрузить фото товара</div>
             <input type="file" accept = "image/gif, image/png, image/jpeg" name="photo" class="form-control" onchange=loadFile(event) id="exampleInputFile1" aria-describedby="fileHelp"><br><br>
@@ -73,6 +76,7 @@
         const output = document.getElementById('output');
         output.src = output.dataset.src;
     };
+
 </script>
 <?php
     require_once('close.php');

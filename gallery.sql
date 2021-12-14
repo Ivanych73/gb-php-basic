@@ -7,6 +7,7 @@
 -- Версия сервера: 5.7.33
 -- Версия PHP: 7.4.21
 
+
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -37,6 +38,7 @@ CREATE TABLE `cart` (
 -- --------------------------------------------------------
 
 --
+
 -- Структура таблицы `catalog`
 --
 
@@ -84,6 +86,7 @@ CREATE TABLE `images` (
 --
 
 INSERT INTO `images` (`id`, `title`, `pathbig`, `pathsmall`, `sizebig`, `sizesmall`, `clicks`, `good_id`) VALUES
+
 (17, '1.jpg', 'img\\big', 'img\\small', 60038, 7930, 49, 1),
 (18, '2.jpg', 'img\\big', 'img\\small', 12271, 5568, 7, 3),
 (19, '3.jpg', 'img\\big', 'img\\small', 249808, 10706, 19, 5),
@@ -145,6 +148,7 @@ INSERT INTO `users` (`id`, `login`, `pass`, `is_customer`, `is_admin`, `salt`) V
 (9, 'admin1', '02dd87039afaf7124ca9c14e5766a9be', 1, 1, '0GrViTNuNtwvDAT6S6gKJB5PP5CEFDHM6GaD2IIfSGm0nOJ3AuyeJ8UJ59mKMe3'),
 (10, 'user1', 'c56e8355145d929852e71b0193d1d7db', 1, 0, 'YLgG6vSmuli2IZkSTXwYVvLFdQatICadzwZ4g6OQraqgR4XdzHynqYOQ6vDvCkE');
 
+
 --
 -- Индексы сохранённых таблиц
 --
@@ -193,7 +197,7 @@ ALTER TABLE `users`
 ALTER TABLE `cart`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
---
+--er
 -- AUTO_INCREMENT для таблицы `catalog`
 --
 ALTER TABLE `catalog`
