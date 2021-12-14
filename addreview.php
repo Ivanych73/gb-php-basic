@@ -1,10 +1,10 @@
 <?php
-    require_once('head.php');    
-    require_once("back.php");
-    require_once('config.php');
+    require_once('head.php');
+    require_once("{$_SERVER['DOCUMENT_ROOT']}/urls.php");
 ?>
 <div class = "container">
-    <form action="savereview.php" method = "post">
+    <form action="<?= SAVE_REVIEW ?>" method = "post">
+
         <input type="hidden" name="id" value=<?= (int)$_GET['id']?>>
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Представтесь</label>

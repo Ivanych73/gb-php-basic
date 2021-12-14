@@ -1,11 +1,12 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Дек 05 2021 г., 15:43
--- Версия сервера: 5.7.29
--- Версия PHP: 7.4.5
+-- Время создания: Дек 07 2021 г., 14:40
+-- Версия сервера: 5.7.33
+-- Версия PHP: 7.4.21
+
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,6 +25,20 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `cart`
+--
+
+CREATE TABLE `cart` (
+  `id` int(11) NOT NULL,
+  `good_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+
 -- Структура таблицы `catalog`
 --
 
@@ -71,15 +86,16 @@ CREATE TABLE `images` (
 --
 
 INSERT INTO `images` (`id`, `title`, `pathbig`, `pathsmall`, `sizebig`, `sizesmall`, `clicks`, `good_id`) VALUES
-(17, '1.jpg', 'img\\big', 'img\\small', 60038, 7930, 42, 1),
+
+(17, '1.jpg', 'img\\big', 'img\\small', 60038, 7930, 49, 1),
 (18, '2.jpg', 'img\\big', 'img\\small', 12271, 5568, 7, 3),
-(19, '3.jpg', 'img\\big', 'img\\small', 249808, 10706, 17, 5),
-(20, '4.jpg', 'img\\big', 'img\\small', 60857, 10830, 13, 7),
-(21, '5.jpg', 'img\\big', 'img\\small', 137251, 6901, 6, 8),
+(19, '3.jpg', 'img\\big', 'img\\small', 249808, 10706, 19, 5),
+(20, '4.jpg', 'img\\big', 'img\\small', 60857, 10830, 19, 7),
+(21, '5.jpg', 'img\\big', 'img\\small', 137251, 6901, 8, 8),
 (22, '6.jpg', 'img\\big', 'img\\small', 62514, 4433, 8, 9),
-(23, '7.jpg', 'img\\big', 'img\\small', 85655, 8818, 13, 10),
-(24, '8.jpg', 'img\\big', 'img\\small', 53399, 8685, 4, 11),
-(25, '9.jpg', 'img\\big', 'img\\small', 68505, 12133, 4, 12);
+(23, '7.jpg', 'img\\big', 'img\\small', 85655, 8818, 14, 10),
+(24, '8.jpg', 'img\\big', 'img\\small', 53399, 8685, 5, 11),
+(25, '9.jpg', 'img\\big', 'img\\small', 68505, 12133, 6, 12);
 
 -- --------------------------------------------------------
 
@@ -109,9 +125,41 @@ INSERT INTO `reviews` (`id`, `good_id`, `reviewer`, `text`) VALUES
 (11, 5, 'автор 13', 'отзыв'),
 (12, 1, 'Автор 14', 'Отзыв');
 
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `login` varchar(63) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `pass` varchar(63) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `is_customer` tinyint(1) NOT NULL,
+  `is_admin` tinyint(1) NOT NULL,
+  `salt` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `users`
+--
+
+INSERT INTO `users` (`id`, `login`, `pass`, `is_customer`, `is_admin`, `salt`) VALUES
+(9, 'admin1', '02dd87039afaf7124ca9c14e5766a9be', 1, 1, '0GrViTNuNtwvDAT6S6gKJB5PP5CEFDHM6GaD2IIfSGm0nOJ3AuyeJ8UJ59mKMe3'),
+(10, 'user1', 'c56e8355145d929852e71b0193d1d7db', 1, 0, 'YLgG6vSmuli2IZkSTXwYVvLFdQatICadzwZ4g6OQraqgR4XdzHynqYOQ6vDvCkE');
+
+
 --
 -- Индексы сохранённых таблиц
 --
+
+--
+-- Индексы таблицы `cart`
+--
+ALTER TABLE `cart`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `good_id` (`good_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Индексы таблицы `catalog`
@@ -134,10 +182,22 @@ ALTER TABLE `reviews`
   ADD KEY `good_id` (`good_id`);
 
 --
+-- Индексы таблицы `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT для сохранённых таблиц
 --
 
 --
+-- AUTO_INCREMENT для таблицы `cart`
+--
+ALTER TABLE `cart`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--er
 -- AUTO_INCREMENT для таблицы `catalog`
 --
 ALTER TABLE `catalog`
@@ -156,8 +216,21 @@ ALTER TABLE `reviews`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
+-- AUTO_INCREMENT для таблицы `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
 -- Ограничения внешнего ключа сохраненных таблиц
 --
+
+--
+-- Ограничения внешнего ключа таблицы `cart`
+--
+ALTER TABLE `cart`
+  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`good_id`) REFERENCES `catalog` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `images`

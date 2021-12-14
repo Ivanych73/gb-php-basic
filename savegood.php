@@ -1,5 +1,11 @@
 <?php
+require_once("{$_SERVER['DOCUMENT_ROOT']}/urls.php");
+if(!$_COOKIE['isAdmin']) {
+    $error = "Для входа в панель управления надо сначала авторизоваться как администратор.";
+    header("Location: ".AUTH_PAGE."?error=$error");
+} else {
     require_once('config.php');
+    mysqli_set_charset($connect, "utf8mb4");
     $goodTitle = trim(strip_tags((string)$_POST['title']));
     $goodTitle = mysqli_real_escape_string($connect, $goodTitle);
     $price = trim(strip_tags((string)$_POST['price']));
@@ -8,19 +14,18 @@
     $description = mysqli_real_escape_string($connect, $description);
     $pathBig = "img/big/";
     $pathSmall = "img/small/";
-    $addUpdateUrl = ADD_UPDATE_GOOD_PAGE;
     $adminUrl = "admin.php";
 
     if (!$_FILES['photo']['error']) {
         if ($_FILES['photo']['size'] > 5242880){
             $message = "Размер файла {$_FILES['photo']['name']} превышает максимально допустимый размер в 5 МБ!";
             unlink($_FILES['photo']['tmp_name']);
-            header("Location: $addUpdateUrl?result=$message&id=$id");
+            header("Location: ".ADD_UPDATE_GOOD_PAGE."?result=$message&id=$id");
         }
         if(!move_uploaded_file($_FILES['photo']['tmp_name'], $pathBig.$_FILES['photo']['name'])) {
             $message = "Ошибка загрузки файла {$_FILES['photo']['name']}!";
             unlink($_FILES['photo']['tmp_name']);
-            header("Location: $addUpdateUrl?result=$message&id=$id");
+            header("Location: ".ADD_UPDATE_GOOD_PAGE."?result=$message&id=$id");
         } else {
             $filename = $_FILES['photo']['name'];
             $message = "$filename успешно загружен в $pathBig! ";
@@ -128,4 +133,5 @@
             header("Location: $adminUrl?result=$message");
         }
     }
+}
 ?>
